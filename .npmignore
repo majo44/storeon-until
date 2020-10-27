@@ -1,0 +1,10 @@
+.idea
+.nyc_output
+coverage
+node_modules
+.gitignore
+.travis.yml
+index.spec.ts
+index.ts
+*.iml
+tsconfig.json
