@@ -16,7 +16,7 @@ The goal of this tiny library is provide the easy way to awaiting occurrence of 
 storeon event. 
 
 ### Install
-> npm i storeon-substore --save
+> npm i storeon-until --save
 
 ### Usage
  

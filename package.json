@@ -1,12 +1,12 @@
 {
     "name": "storeon-until",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Small simple utility for awaiting [Storeon] event occurs",
     "repository": {
         "type": "git",
-        "url": "https://github.com/majo44/storeon-substore.git"
+        "url": "https://github.com/majo44/storeon-until.git"
     },
-    "bugs": "https://github.com/majo44/storeon-substore/issues",
+    "bugs": "https://github.com/majo44/storeon-until/issues",
     "keywords": [
         "storeon",
         "promise",
@@ -56,11 +56,13 @@
         "ts-node": "^8.6.2",
         "tslib": "^1.11.1",
         "typedoc": "^0.17.1",
-        "typescript": "^3.8.3"
+        "typescript": "^3.8.3",
+        "rimraf": "^3.0.2"
     },
     "scripts": {
+        "clean": "rimraf index.d.ts index.js index.js.map module",
         "size": "size-limit",
-        "build": "run-s lint test compile:commonjs compile:module size docs ",
+        "build": "run-s clean lint test compile:commonjs compile:module size docs ",
         "compile:module": "tsc --module esnext --outDir module",
         "compile:commonjs": "tsc",
         "docs": "typedoc --theme minimal --includeDeclarations --excludeExternals --out docs --exclude \"node_modules/**/*\" index.ts",
