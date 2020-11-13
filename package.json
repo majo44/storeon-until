@@ -1,6 +1,6 @@
 {
     "name": "storeon-until",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Small simple utility for awaiting [Storeon] event occurs",
     "repository": {
         "type": "git",
