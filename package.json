@@ -1,6 +1,6 @@
 {
     "name": "storeon-until",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Small simple utility for awaiting [Storeon] event occurs",
     "repository": {
         "type": "git",
@@ -72,11 +72,11 @@
     },
     "size-limit": [
         {
-            "limit": "67 B",
+            "limit": "101 B",
             "path": "index.js"
         },
         {
-            "limit": "67 B",
+            "limit": "101 B",
             "path": "module/index.js"
         }
     ],

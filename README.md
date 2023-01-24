@@ -19,6 +19,51 @@ storeon event.
 > npm i storeon-until --save
 
 ### Usage
+
+#### Simple usage
+
+From version 1.1.0 we provided the shortcut to inline the await statement with dispatch.
+The returned promise contains the `dispatch` function which allows to dispatch the event on store,
+that function returns the promise again.
+
+```javascript
+
+import { createStoreon } from "storeon";
+import { until } from "storeon-until";
+
+// create store 
+const store = createStoreon([]);
+
+// some async event handler
+store.on('loadDocument', async (state, id) => {
+    const document = await fetch(`http://some.document.com/${id}`);
+    store.dispatch('documentLoaded', {id, document});
+});
+// reducer for ending event
+store.on('documentLoaded', (_, {id, document}) => ({
+    id,
+    document
+}));
+
+const {id, document} =
+    // awaiting for the ending event    
+    await until(store, 'documentLoaded', (_, {id}) => id === 'id1')
+        // dispatch event over waiting
+        .dispatchOver('loadDocument', 'id1');
+
+console.log(document);
+
+const {id, document} =
+    // waits until data in state will pass condition    
+    await until(store, '@changed', ({id}) => id === 'id2')
+        // dispatch event over waiting
+        .dispatchOver('loadDocument', 'id2');
+
+console.log(document);
+
+```
+
+#### More verbose usage
  
 ```javascript
 
@@ -40,7 +85,7 @@ store.on('documentLoaded', (_, {id, document}) => ({
 }));
 
 // awaiting for the ending event
-const documentLoadedPromise = await until(store, 'documentLoaded', (_, {id}) => id === 'id1');
+const documentLoadedPromise = until(store, 'documentLoaded', (_, {id}) => id === 'id1');
 // dispatch event
 store.dispatch('loadDocument', 'id1');
 // waits until async flow will finish
@@ -58,14 +103,17 @@ console.log(document);
 
 ```
 
+
 **Caution**
 
 Please notice, that we should always use `until` utility to create promise before the event dispatch 
 as dispatched event can run synchronously.   
 
 ### Api
-- `until` - is function which returns promise of requested event data. Params:
+- `until` - is function which returns `UntilResult` (which is promise) of requested event data. Params:
   - `store` the store
   - `event` the event which we are waiting for
   - `condition` - (optional) - the function which gets state, and event data and have to return true 
   if promise has to be resolved for that state or data  
+- `UntilResult`
+  - `dispatchOver` - function which allows to dispatch event on the store in await place   
